@@ -1,0 +1,89 @@
+@charset "UTF-8";
+/** dark 主题下的变量 */
+.dark {
+  /** Layout 相关 */ /** Login 页面相关 */ /** ErrorPage 页面相关 */ /** Element Plus 相关 */ /** 这里可以写业务页面的黑暗样式 */
+}
+.dark .app-wrapper {
+  color: #c0c4cc;
+}
+.dark .app-wrapper .sidebar-container .sidebar-logo-container {
+  background-color: #212121 !important;
+}
+.dark .app-wrapper .sidebar-container .el-menu {
+  background-color: #262626 !important;
+}
+.dark .app-wrapper .sidebar-container .el-menu .el-menu-item {
+  background-color: #262626 !important;
+  color: #9898a2 !important;
+}
+.dark .app-wrapper .sidebar-container .el-menu .el-menu-item.is-active, .dark .app-wrapper .sidebar-container .el-menu .el-menu-item:hover {
+  background-color: #303030 !important;
+  color: #ec48c9 !important;
+}
+.dark .app-wrapper .sidebar-container .el-sub-menu__title {
+  color: #9898a2 !important;
+  background-color: #262626 !important;
+}
+.dark .app-wrapper .navigation-bar {
+  background-color: #1c1c1c;
+}
+.dark .app-wrapper .navigation-bar .right-menu .svg-icon {
+  color: #c0c4cc;
+}
+.dark .app-wrapper .tags-view-container {
+  background-color: #1c1c1c !important;
+  border-bottom: 1px solid #363636 !important;
+}
+.dark .app-wrapper .tags-view-container .tags-view-item {
+  background-color: #1c1c1c !important;
+  color: #c0c4cc !important;
+  border: 1px solid #303133 !important;
+}
+.dark .app-wrapper .tags-view-container .tags-view-item.active {
+  background-color: #ec48c9 !important;
+  color: #fff !important;
+  border-color: #303133 !important;
+}
+.dark .app-wrapper .tags-view-container .contextmenu {
+  background-color: #303030;
+  color: #c0c4cc;
+}
+.dark .app-wrapper .tags-view-container .contextmenu li:hover {
+  background-color: #454545;
+  color: #fff;
+}
+.dark .app-wrapper .handle-button {
+  background-color: #4f4f4f !important;
+}
+.dark .login-container {
+  background-color: #1c1c1c;
+  color: #c0c4cc;
+}
+.dark .login-container .login-card {
+  background-color: #262626 !important;
+}
+.dark .error-page {
+  background-color: #1c1c1c;
+}
+.dark .el-popper {
+  border: none !important;
+}
+.dark .el-popper .el-menu {
+  background-color: #262626 !important;
+}
+.dark .el-popper .el-menu .el-menu-item {
+  background-color: #262626 !important;
+}
+.dark .el-popper .el-menu .el-menu-item.is-active, .dark .el-popper .el-menu .el-menu-item:hover {
+  background-color: #303030 !important;
+  color: #fff !important;
+}
+.dark .el-popper .el-menu .el-sub-menu__title {
+  background-color: #262626 !important;
+}
+.dark .app-main {
+  background-color: #1c1c1c !important;
+}
+.dark .app-main .permission-alert {
+  background-color: #303030;
+}/*# sourceMappingURL=index.css.map */

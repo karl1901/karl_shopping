@@ -1,0 +1,1 @@
+const e=Vue.defineComponent({__name:"index",setup(e){const u=VueRouter.useRoute();return VueRouter.useRouter().replace({path:"/"+u.params.path,query:u.query}),(e,u)=>(Vue.openBlock(),Vue.createElementBlock("div"))}});export{e as default};

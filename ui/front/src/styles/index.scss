@@ -1,0 +1,139 @@
+// 全局 CSS 变量
+@import './variables.css';
+// Transition
+@import './transition.scss';
+// 注册多主题
+@import './theme/register.scss';
+
+// 业务页面几乎都应该在根元素上挂载 class="app-container"，以保持页面美观
+.app-container {
+  padding: 20px;
+}
+
+// .mb-数值 { margin-bottom: 数值+'px' }
+@for $i from 1 through 100 {
+  .mb-#{$i} {
+    margin-bottom: $i + px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .mt-#{$i} {
+    margin-top: $i + px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .ml-#{$i} {
+    margin-left: $i + px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .mr-#{$i} {
+    margin-right: $i + px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .m-#{$i} {
+    margin: $i + px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .p-#{$i} {
+    padding: $i + px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .pt-#{$i} {
+    padding-top: $i + px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .pb-#{$i} {
+    padding-bottom: $i + px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .pl-#{$i} {
+    padding-left: $i + px;
+  }
+}
+
+@for $i from 1 through 100 {
+  .pr-#{$i} {
+    padding-right: $i + px;
+  }
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-column-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background-color: var(--v3-body-bg-color);
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+}
+
+#app {
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+a,
+a:focus,
+a:hover {
+  color: inherit;
+  outline: none;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}

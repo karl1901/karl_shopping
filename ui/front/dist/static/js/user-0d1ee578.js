@@ -1,0 +1,1 @@
+var a=(a=>(a.M="男",a.F="女",a.N="保密",a))(a||{}),E=(a=>(a.PWD="修改密码",a.USER_INFO="修改用户附加信息",a.EMAIL="修改邮箱信息",a.PHONE="修改手机号",a))(E||{}),N=(a=>(a.ADMIN="管理员",a.USER="普通用户",a))(N||{});export{E as U,a,N as b};
