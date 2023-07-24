@@ -7,17 +7,22 @@ interface IThemeList {
 
 const DEFAULT_THEME_NAME = 'dark'
 type DefaultThemeNameType = typeof DEFAULT_THEME_NAME
-export type ThemeName = DefaultThemeNameType | 'light'
+
+export type ThemeName = DefaultThemeNameType | 'normal' | 'auto'
 
 /** 主题列表 */
 const themeList: IThemeList[] = [
+  {
+    title: '跟随系统',
+    name: 'auto'
+  },
   {
     title: '黑暗',
     name: 'dark'
   },
   {
     title: '白色',
-    name: 'light'
+    name: 'normal'
   }
 ]
 
@@ -36,13 +41,28 @@ const setTheme = (value: ThemeName) => {
   activeThemeName.value = value
 }
 
-/** 在 html 根元素上挂载 class */
-const setHtmlClassName = (value: ThemeName) => {
+const match = matchMedia('(prefers-color-scheme: dark)')
+
+const followSystem = () => {
   themeList.forEach((item) => {
     document.documentElement.classList.remove(item.name)
   })
+  if (match.matches) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.add('normal')
+  }
+}
 
-  document.documentElement.className = value
+/** 在 html 根元素上挂载 class */
+const setHtmlClassName = (value: ThemeName) => {
+  if (value === 'auto') {
+    followSystem()
+    match.addEventListener('change', followSystem)
+  } else {
+    document.documentElement.className = value
+    match.removeEventListener('change', followSystem)
+  }
 }
 
 /** 主题 hook */

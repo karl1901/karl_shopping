@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { CameraOutlined, EyeOutlined, MessageFilled } from '@ant-design/icons-vue'
+import { User, Lock, Message } from '@element-plus/icons-vue'
 import { type LoginRequestData, registerApi, type RegisterRequestData, checkFaceApi } from '@/api/login'
 import { getMD5, getBase64Image } from '@/utils/index'
-import { message } from 'ant-design-vue'
+import Return from '@/icons/svg/return.svg?component'
 
 const router = useRouter()
 const hasLogin = ref(false)
@@ -49,9 +49,9 @@ const imageCodeRefReg = ref<any>()
 /** 登录逻辑 */
 const handleLogin = () => {
   if (currentType.value === 0) {
-    if (loginForm.user.uname === '') return message.warning('请输入用户名！')
-    if (loginForm.user.pwd === '') return message.warning('请输入密码！')
-    if (loginForm.imageCode === '') return message.warning('请输入图片验证码！')
+    if (loginForm.user.uname === '') return ElMessage.warning('请输入用户名！')
+    if (loginForm.user.pwd === '') return ElMessage.warning('请输入密码！')
+    if (loginForm.imageCode === '') return ElMessage.warning('请输入图片验证码！')
     loading.value = true
     useUserStore()
       .login({
@@ -82,8 +82,8 @@ const handleLogin = () => {
       })
   } else if (currentType.value === 1) {
     console.log(loginForm.address === '', /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(loginForm.address))
-    if (loginForm.address === '' || !/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(loginForm.address)) return message.warning('请输入正确的邮箱！')
-    if (loginForm.mailCode === '') return message.warning('请输入邮箱验证码！')
+    if (loginForm.address === '' || !/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(loginForm.address)) return ElMessage.warning('请输入正确的邮箱！')
+    if (loginForm.mailCode === '') return ElMessage.warning('请输入邮箱验证码！')
     loading.value = true
     useUserStore()
       .loginByEmail({
@@ -103,7 +103,7 @@ const handleLogin = () => {
       })
   } else if (currentType.value === 2) {
     console.log('人脸登录')
-    if (loginForm.uid === -1) return message.warning('请先进行人脸识别！')
+    if (loginForm.uid === -1) return ElMessage.warning('请先进行人脸识别！')
     loading.value = true
     useUserStore()
       .loginByUserFace(loginForm.uid)
@@ -124,11 +124,11 @@ const handleLogin = () => {
 }
 /** 注册逻辑 */
 const handleRegister = () => {
-  if (regForm.user.uname === '') return message.warning('请输入用户名！')
-  if (regForm.user.pwd === '') return message.warning('请输入密码！')
-  if (regForm.address === '' || !/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(regForm.address)) return message.warning('请输入正确的邮箱！')
-  if (regForm.mailCode === '') return message.warning('请输入邮箱验证码！')
-  if (regForm.imageCode === '') return message.warning('请输入图片验证码！')
+  if (regForm.user.uname === '') return ElMessage.warning('请输入用户名！')
+  if (regForm.user.pwd === '') return ElMessage.warning('请输入密码！')
+  if (regForm.address === '' || !/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(regForm.address)) return ElMessage.warning('请输入正确的邮箱！')
+  if (regForm.mailCode === '') return ElMessage.warning('请输入邮箱验证码！')
+  if (regForm.imageCode === '') return ElMessage.warning('请输入图片验证码！')
   loading.value = true
   registerApi({
     ...regForm,
@@ -158,11 +158,11 @@ const handleRegister = () => {
 
 /** 手机号登录 */
 const handleLoginByPhone = () => {
-  message.warning('暂未开放此功能！')
+  ElMessage.warning('暂未开放此功能！')
 }
 /** 邮箱登录 */
 const handleLoginByEmail = () => {
-  message.warning('暂未开放此功能！')
+  ElMessage.warning('暂未开放此功能！')
 }
 
 const handleChange = () => {
@@ -174,9 +174,9 @@ const handleSubmit = () => {
 }
 
 const handleBackPass = () => {
-  message.error('密码都能忘记，你还是换个账号吧！')
+  ElMessage.error('密码都能忘记，你还是换个账号吧！')
   setTimeout(() => {
-    message.error('别惊讶，只是懒得做这个功能！')
+    ElMessage.error('别惊讶，只是懒得做这个功能！')
   }, 4000)
 }
 
@@ -244,7 +244,7 @@ const handleGetVideo = () => {
     })
     .catch((err) => {
       console.log('获取摄像头失败，请检查设备是否有摄像头!', err)
-      message.error('获取摄像头失败，请检查设备是否有摄像头!')
+      ElMessage.error('获取摄像头失败，请检查设备是否有摄像头!')
       setTimeout(() => {
         currentType.value = 1
       }, 2000)
@@ -274,36 +274,36 @@ const handleReturn = () => {
   <div class="login-container">
     <ThemeSwitch class="theme-switch" />
     <div class="login-card">
-      <div flex justify-center items-center>
-        <img rounded-full h-150px w-150px src="https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=350" />
+      <div flex justify-center items-center h-150px>
+        <img h-full rounded-full src="https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=500" />
       </div>
       <div class="content">
         <!-- 登录表单 -->
-        <a-form size="large" v-if="isLogin" ref="loginFormRef" :show-message="false" :model="loginForm" @keyup.enter="handleLogin">
+        <el-form v-loading="loading" size="large" v-if="isLogin" ref="loginFormRef" :show-message="false" :model="loginForm" @keyup.enter="handleLogin">
           <!-- 账号密码登录 -->
-          <a-form-item prop="user.uname" v-if="currentType === 0">
-            <a-input v-model.trim="loginForm.user.uname" clearable placeholder="用户名" />
-          </a-form-item>
-          <a-form-item prop="user.pwd" v-if="currentType === 0">
-            <a-input v-model.trim="loginForm.user.pwd" clearable placeholder="密码" type="password" show-password />
-          </a-form-item>
+          <el-form-item prop="user.uname" v-if="currentType === 0">
+            <el-input v-model.trim="loginForm.user.uname" clearable placeholder="用户名" :prefix-icon="User" />
+          </el-form-item>
+          <el-form-item prop="user.pwd" v-if="currentType === 0">
+            <el-input v-model.trim="loginForm.user.pwd" clearable placeholder="密码" type="password" :prefix-icon="Lock" show-password />
+          </el-form-item>
           <ImageCode ref="imageCodeRefLogin" v-model.trim="loginForm.imageCode" v-if="currentType === 0" />
 
           <!-- 邮箱登录 -->
-          <a-form-item prop="address" v-if="currentType === 1">
-            <a-input v-model.trim="loginForm.address" clearable placeholder="邮箱" />
-          </a-form-item>
+          <el-form-item prop="address" v-if="currentType === 1">
+            <el-input v-model.trim="loginForm.address" clearable placeholder="邮箱" :prefix-icon="User" />
+          </el-form-item>
 
           <CodeSend v-if="currentType === 1" :type="2" v-model:mailCode.trim="loginForm.mailCode" v-model:address.trim="loginForm.address" />
 
           <!-- 人脸识别 -->
-          <a-form-item v-if="currentType === 2">
+          <el-form-item v-if="currentType === 2">
             <div v-if="userFaceInfoList.length" class="user-face-info-list">
               <div v-if="hasLogin">亲爱的的用户{{ getUserNickName() }}，您好，您已成功登录，请稍等</div>
               <div v-else>
                 <div @click="chooseUserFace(item.uid)" class="user-face-info" v-for="item in userFaceInfoList" :key="item.uid">
                   <div>
-                    <img :src="item.avatar_url ? item.avatar_url : 'https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=350'" />
+                    <img :src="item.avatar_url ? item.avatar_url : 'https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=500'" />
                   </div>
                   <div class="user-face-info-nickname">{{ item.nickname }}</div>
                 </div>
@@ -315,36 +315,29 @@ const handleReturn = () => {
                 <video id="video" />
               </div>
             </div>
-          </a-form-item>
-        </a-form>
+          </el-form-item>
+        </el-form>
 
         <!-- 注册表单 -->
-        <a-form size="large" v-else ref="regFormRef" :model="regForm" @keyup.enter="handleRegister">
-          <a-form-item prop="user.uname">
-            <a-input v-model.trim="regForm.user.uname" clearable placeholder="用户名" />
-          </a-form-item>
-          <a-form-item prop="user.pwd">
-            <a-input v-model.trim="regForm.user.pwd" clearable placeholder="密码" type="password" show-password />
-          </a-form-item>
-          <a-form-item prop="address">
-            <a-input v-model.trim="regForm.address" clearable placeholder="邮箱" />
-          </a-form-item>
+        <el-form size="large" v-else ref="regFormRef" :model="regForm" @keyup.enter="handleRegister">
+          <el-form-item prop="user.uname">
+            <el-input v-model.trim="regForm.user.uname" clearable placeholder="用户名" :prefix-icon="User" />
+          </el-form-item>
+          <el-form-item prop="user.pwd">
+            <el-input v-model.trim="regForm.user.pwd" clearable placeholder="密码" type="password" :prefix-icon="Lock" show-password />
+          </el-form-item>
+          <el-form-item prop="address">
+            <el-input v-model.trim="regForm.address" clearable placeholder="邮箱" :prefix-icon="Message" />
+          </el-form-item>
           <CodeSend :type="1" v-model:mailCode.trim="regForm.mailCode" v-model:address.trim="regForm.address" />
           <ImageCode ref="imageCodeRefReg" v-model.trim="regForm.imageCode" />
-        </a-form>
-        <a-button
-          :loading="loadingVideo"
-          size="large"
-          block
-          type="primary"
-          v-if="currentType === 2 && userFaceInfoList.length === 0"
-          @click="handleCheckUserFace"
-        >
+        </el-form>
+        <el-button :loading="loadingVideo" size="large" type="primary" v-if="currentType === 2 && userFaceInfoList.length === 0" @click="handleCheckUserFace">
           校验人脸
-        </a-button>
-        <a-button :loading="loading" v-if="currentType !== 2" block size="large" type="primary" @click="handleSubmit">
+        </el-button>
+        <el-button :loading="loading" v-if="currentType !== 2" size="large" type="primary" @click="handleSubmit">
           {{ isLogin ? '登 录' : '注 册' }}
-        </a-button>
+        </el-button>
         <div style="display: flex; justify-content: center; margin-top: 16px">
           <el-link @click.prevent="handleChange" v-if="currentType !== 2">
             {{ isLogin ? '还没有账号？立即前往注册' : '已有账号？立即前往登录' }}
@@ -354,10 +347,10 @@ const handleReturn = () => {
       </div>
 
       <div class="footer" v-if="isLogin">
-        <EyeOutlined class="aIcon" v-if="currentType === 1 || currentType === 2" @click="currentType = 0" />
-        <EyeOutlined class="aIcon" v-if="currentType === 0 || currentType === 2" @click="currentType = 1" />
-        <CameraOutlined class="aIcon" v-if="currentType === 1 || currentType === 0" @click="currentType = 2" />
-        <EyeOutlined class="aIcon" v-if="currentType === 2" @click="handleReturn" />
+        <el-icon v-if="currentType === 1 || currentType === 2" @click="currentType = 0"><User /></el-icon>
+        <el-icon v-if="currentType === 0 || currentType === 2" @click="currentType = 1"><Message /></el-icon>
+        <el-icon v-if="currentType === 1 || currentType === 0" @click="currentType = 2"><VideoCamera /></el-icon>
+        <el-icon v-if="currentType === 2" @click="handleReturn"><RefreshLeft /></el-icon>
       </div>
     </div>
   </div>
@@ -370,14 +363,6 @@ const handleReturn = () => {
   align-items: center;
   width: 100%;
   min-height: 100%;
-
-  .theme-switch {
-    position: fixed;
-    top: 5%;
-    right: 5%;
-    cursor: pointer;
-    overflow: hidden;
-  }
   .user-face-info-list {
     overflow: hidden;
     width: 100%;
@@ -447,7 +432,13 @@ const handleReturn = () => {
       object-fit: cover;
     }
   }
-
+  .theme-switch {
+    position: fixed;
+    top: 5%;
+    right: 5%;
+    cursor: pointer;
+    overflow: hidden;
+  }
   .login-card {
     width: 480px;
     border-radius: 20px;
@@ -466,7 +457,7 @@ const handleReturn = () => {
     }
     .content {
       padding: 20px 50px 50px 50px;
-      :deep(.a-input-group__append) {
+      :deep(.el-input-group__append) {
         padding: 0;
         overflow: hidden;
         .el-image {
@@ -489,7 +480,7 @@ const handleReturn = () => {
       align-items: center;
       height: 50px;
       border-top: 1px solid #ebeef5;
-      .aIcon {
+      :deep(.el-icon) {
         padding: 0;
         margin: 0 10px;
         color: #409eff;

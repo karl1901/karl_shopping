@@ -4,7 +4,6 @@ import { getMD5 } from '@/utils/index'
 import { UpdateType } from '@/enum/user'
 import { useUserStore } from '@/store/modules/user'
 import { getBase64Image } from '@/utils'
-import { message } from 'ant-design-vue'
 
 const userStore = useUserStore()
 
@@ -56,7 +55,7 @@ const handleClose = () => {
 
 const submitPwd = () => {
   if (ruleForm.pwd === '') {
-    message.error('请输入新密码')
+    ElMessage.error('请输入新密码')
     return
   }
   loading.value = true
@@ -75,11 +74,11 @@ const submitPwd = () => {
 const submitUserInfo = () => {
   // 校验qq和微信
   if (userInfo.value.qq === '' || !/^[1-9][0-9]{4,10}$/.test(userInfo.value.qq as string)) {
-    message.error('请输入正确的qq号')
+    ElMessage.error('请输入正确的qq号')
     return
   }
   if (userInfo.value.wx === '' || !/^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$/.test(userInfo.value.wx as string)) {
-    message.error('请输入正确的微信号')
+    ElMessage.error('请输入正确的微信号')
     return
   }
   loading.value = true
@@ -90,7 +89,7 @@ const submitUserInfo = () => {
       qq: userInfo.value.qq,
       wx: userInfo.value.wx,
       sex: userInfo.value.sex,
-      avatar_url: 'https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=350'
+      avatar_url: 'https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=500'
     }
   })
     .then(() => {
@@ -107,7 +106,7 @@ const submitUserInfo = () => {
 const submitEmailInfo = () => {
   const reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
   if (userInfo.value.mail === '' || !reg.test(userInfo.value.mail)) {
-    message.error('请输入正确的邮箱')
+    ElMessage.error('请输入正确的邮箱')
     userInfo.value.mail = ''
     return
   }
@@ -117,10 +116,10 @@ const submitEmailInfo = () => {
     .then((res) => {
       console.log(res)
       if (!res.success) {
-        message.error(res.message)
+        ElMessage.error(res.message)
         return
       }
-      message.success(res.message)
+      ElMessage.success(res.message)
       handleClose()
     })
     .catch((e) => {
@@ -195,6 +194,7 @@ const handleOpenFaceDialog = () => {
       video.play()
     })
     .catch((err) => {
+      ElMessage.error('获取摄像头失败，请检查设备是否有摄像头!')
       console.log('获取摄像头失败，请检查设备是否有摄像头!', err)
     })
 }
@@ -251,16 +251,7 @@ const handleDelUserFace = () => {
 </script>
 
 <template>
-  <el-dialog
-    :close-on-click-modal="false"
-    v-model.trim="dialogVisible"
-    width="30%"
-    align-center
-    :title="title"
-    append-to-body
-    :show-close="false"
-    :close-on-press-escape="false"
-  >
+  <el-dialog v-model.trim="dialogVisible" width="30%" align-center :title="title" append-to-body :show-close="false" :close-on-press-escape="false">
     <div v-loading="loading">
       <div flex justify-center items-center>
         <el-form v-if="updateType === UpdateType.PWD" @keyup.enter="handleSubmit" :model="ruleForm">
@@ -302,7 +293,7 @@ const handleDelUserFace = () => {
             <el-image :src="userFace.content" :preview-src-list="[userFace.content]" />
           </div>
           <div v-else>
-            <el-image :src="'https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=350'" />
+            <el-image :src="'https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=500'" />
           </div>
         </el-form>
       </div>
@@ -318,7 +309,6 @@ const handleDelUserFace = () => {
   </el-dialog>
 
   <el-dialog
-    :close-on-click-modal="false"
     v-model.trim="faceDialogVisible"
     @closed="handleCloseFaceDialog"
     width="50%"

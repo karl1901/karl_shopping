@@ -23,11 +23,11 @@ const { exec, time } = useIntervalRequest(60, async () => {
 <template>
   <div class="flex-between mb-16">
     <div>
-      <a-input clearable v-model.trim="code" placeholder="请输入收到的邮箱验证码" size="large" />
+      <el-input clearable v-model.trim="code" placeholder="请输入收到的邮箱验证码" size="large" />
     </div>
     <div>
-      <a-button disabled size="large" v-if="time">请{{ time }}后操作</a-button>
-      <a-button type="primary" size="large" danger @click="exec" v-else>发送邮箱验证码</a-button>
+      <el-button disabled size="large" v-if="time">请{{ time }}后操作</el-button>
+      <el-button type="danger" size="large" @click="exec" v-else>发送邮箱验证码</el-button>
     </div>
   </div>
 </template>

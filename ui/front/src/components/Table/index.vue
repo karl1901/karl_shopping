@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { randomUUID, formatDateTime, changeArea, formatMoney } from '@/utils/index'
+import { randomUUID, formatDateTime, changeArea, formatMoney, getTextWidth } from '@/utils/index'
 import { RefreshRight, Download } from '@element-plus/icons-vue'
 import { usePagination } from '@/hooks/usePagination'
 import { ElNotification } from 'element-plus'
 import { getDataModelDataApi } from '@/api/table'
 import { type TableColumn, type ButtonList } from './types/index'
+import { debounce } from 'lodash-es'
+import { TABLE_DOWN } from '@/constants/data'
 const { paginationData, handleSizeChange, handleCurrentChange } = usePagination({ pageSize: 15, pageSizes: [15, 30, 50, 100] })
 
 const tableKey = randomUUID()
-
-//  q:父组件传递过来的
 
 /** Props配置 */
 interface Props {
   /** 表格宽度 */
   tableWidth?: string | number
   /** 默认列宽 */
-  defaultWidth?: string | number
+  defaultWidth?: number | string
   /** 是否有启用禁用按钮 */
   hasEnableDisable?: boolean
   /** 是否有编辑按钮 */
@@ -41,18 +41,15 @@ interface Props {
   dataModel?: string
   /** 查询条件 */
   queryWapper?: Record<string, any>
-  /** 排序 */
-  sortBy?: {
-    sortKey: string
-    sortOrder: 'asc' | 'desc'
-  }
   /** 是否立即获取数据 */
   getDataModelListNow?: boolean
   /** 是否保留选择框选择 */
   reserveSelection?: boolean
   /** 表格上方是否有按钮 */
   hasTopButton?: boolean
+  /** 是否有下载按钮 */
   hasDownload?: boolean
+  /** 数据模型类型 */
   dataModelType?: string
 }
 
@@ -68,10 +65,6 @@ const props = withDefaults(defineProps<Props>(), {
   operateWidth: 200,
   showSummary: false,
   dataModel: '',
-  sortBy: () => ({
-    sortKey: 'created_at',
-    sortOrder: 'desc'
-  }),
   getDataModelListNow: true,
   reserveSelection: true,
   hasTopButton: true,
@@ -93,7 +86,6 @@ const {
   buttonList,
   dataModel,
   queryWapper,
-  sortBy,
   dataModelType,
   getDataModelListNow,
   reserveSelection
@@ -101,6 +93,7 @@ const {
 
 const emit = defineEmits(['selection-change', 'row-click', 'row-dblclick', 'getData', 'handleEdit', 'handleDelete', 'handleDisable', 'handleEnable'])
 const loading = ref(false)
+const tableHeight = ref<number>(0)
 const tableData = ref<any>([])
 
 /** 合计 */
@@ -202,8 +195,8 @@ const changePercent = (value: number | string) => {
     return '0%'
   } else if (+value > 0 && +value < 1) {
     return +value * 100 + '%'
-  } else if (+value > 1) {
-    return value
+  } else if (+value >= 1) {
+    return value + '%'
   } else {
     return ''
   }
@@ -226,16 +219,10 @@ const showArrayByModel = (arr: any[], model: string) => {
 const getCodeToText = (value: any, model: string[]) => {
   return changeArea(value, model)
 }
+
 /** 下载表格 */
-const handleDownload = () => {
-  // const theader = tableColumnList?.value?.map((item: any) => {
-  //   return {
-  //     key: item.prop,
-  //     title: item.label
-  //   }
-  // }) as any[]
-  // exportJson2Excel(theader, tableData.value, dataModel.value)
-}
+const handleDownload = () => {}
+
 /** 刷新表格 */
 const handleRefresh = () => {
   getDataModelList()
@@ -267,11 +254,36 @@ const svg = `
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `
 
-const transformText = (text: string | undefined) => {
-  if (text === undefined) return ''
-  if (text.length > 10) return text.slice(0, 10) + '...'
-  else return text
+const transformText = (text: string, width: number | string) => {
+  if (Number(width) <= 0) {
+    throw new Error('width must be greater than 0')
+  }
+  if (typeof width === 'string') {
+    width = parseInt(width, 10)
+  }
+  const textWidth = getTextWidth(text)
+  if (typeof width === 'number' && textWidth > width) {
+    return text.slice(0, 10) + '...'
+  } else {
+    return text
+  }
 }
+
+const getTableHeight = () => {
+  tableHeight.value = window.innerHeight - TABLE_DOWN
+}
+
+const resizeTableHeight = () => {
+  getTableHeight()
+  // debounce(getTableHeight, 100)
+  window.addEventListener('resize', getTableHeight)
+}
+
+resizeTableHeight()
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', getTableHeight)
+})
 
 watch([() => paginationData.pageNumber, () => paginationData.pageSize], handleGetTableData, {
   immediate: true
@@ -288,7 +300,9 @@ watch([() => paginationData.pageNumber, () => paginationData.pageSize], handleGe
   >
     <!-- Button -->
     <div v-if="hasTopButton" flex justify-between mb-20px>
-      <div />
+      <div>
+        <slot name="searchForm" />
+      </div>
       <div>
         <el-tooltip content="导出" v-if="hasDownload">
           <el-button type="primary" :icon="Download" plain circle @click="handleDownload" />
@@ -296,16 +310,17 @@ watch([() => paginationData.pageNumber, () => paginationData.pageSize], handleGe
         <el-tooltip content="刷新表格">
           <el-button type="primary" :icon="RefreshRight" plain circle @click="handleRefresh" />
         </el-tooltip>
+        <slot name="topButton" />
       </div>
     </div>
     <!-- Table -->
-    <div mb-20px class="height">
+    <div mb-20px class="table-content">
       <el-table
         :row-key="tableKey"
         ref="curdTable"
         highlight-current-row
         :data="tableData"
-        height="100%"
+        :height="tableHeight"
         :show-summary="showSummary"
         :summary-method="getSummaries"
         @selection-change="handleSelectionChange"
@@ -319,7 +334,7 @@ watch([() => paginationData.pageNumber, () => paginationData.pageSize], handleGe
         <el-table-column v-if="hasIndex" type="index" width="55" align="center" label="序号" />
 
         <!-- 操作栏 -->
-        <el-table-column fixed="right" v-if="hasOperate" :width="operateWidth + 'px'" align="center" label="操作">
+        <el-table-column fixed="right" v-if="hasOperate" :width="operateWidth" align="center" label="操作">
           <template #default="{ row }">
             <el-button text bg size="small" v-if="hasEdit" type="primary" @click="handleEdit(row)">编辑</el-button>
             <el-button
@@ -373,7 +388,7 @@ watch([() => paginationData.pageNumber, () => paginationData.pageSize], handleGe
             <el-tag v-else-if="key.type === 'tag'" size="small" :type="key.tagType">{{ row[key.prop] }}</el-tag>
             <span v-else-if="key.type === 'text'">
               <el-tooltip placement="top" :content="row[key.prop]">
-                {{ transformText(row[key.prop]) }}
+                {{ transformText(row[key.prop], key.width ? key.width : defaultWidth) }}
               </el-tooltip>
             </span>
             <span v-else>{{ row[key.prop] }}</span>
@@ -398,7 +413,7 @@ watch([() => paginationData.pageNumber, () => paginationData.pageSize], handleGe
 </template>
 
 <style lang="scss" scoped>
-.height {
+.content {
   height: calc(100vh - 400px);
 }
 </style>

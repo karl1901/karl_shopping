@@ -63,8 +63,6 @@ watch([logTypeList], () => {
 
 <template>
   <div p-20px>
-    <Search :searchItems="searchItems" :searchData="searchData" />
-
     <Table
       mt-20px
       ref="table"
@@ -75,6 +73,10 @@ watch([logTypeList], () => {
       :hasOperate="false"
       @getData="getTableData"
       :operateWidth="200"
-    />
+    >
+      <template #searchForm>
+        <Search :searchItems="searchItems" :searchData="searchData" />
+      </template>
+    </Table>
   </div>
 </template>

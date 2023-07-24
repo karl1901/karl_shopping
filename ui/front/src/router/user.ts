@@ -1,25 +1,37 @@
 const Layout = () => import('@/layout/index.vue')
 
 export default {
-  path: '/manage',
+  path: '/user-manage',
   component: Layout,
   redirect: 'noRedirect',
-  name: 'Manage',
+  name: 'User-Manage',
   meta: {
-    title: '管理',
-    svgIcon: 'menu',
+    title: '用户信息管理',
+    iIcon: '&#xe663;',
     roles: ['admin'],
     alwaysShow: true
   },
   children: [
     {
-      path: 'user',
-      // component: () => import('@/views/manage/user.vue'),
-      name: 'User',
+      path: 'user-log',
+      component: () => import('@/views/user-manage/user-log.vue'),
+      name: 'UserLog',
       meta: {
-        title: '用户管理',
+        title: '用户日志',
         roles: ['admin'],
-        keepAlive: true
+        iIcon: '&#xe6ac;',
+        keepAlive: false
+      }
+    },
+    {
+      path: 'user-list',
+      component: () => import('@/views/user-manage/user-list.vue'),
+      name: 'UserList',
+      meta: {
+        title: '用户列表',
+        iIcon: '&#xe659;',
+        roles: ['admin'],
+        keepAlive: false
       }
     }
   ]

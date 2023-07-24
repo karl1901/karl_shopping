@@ -2,7 +2,7 @@
 import { type UserData } from '@/api/login'
 import { bannedUserApi, sendMessageApi } from '@/api/admin'
 import Editor from '@/components/WangEditor/index.vue'
-import { message, notification } from 'ant-design-vue'
+
 defineOptions({
   name: 'UserList'
 })
@@ -49,9 +49,65 @@ const getTableData = ({ list }: any) => {
   })
 }
 
-const handleDisable = (row: UserData) => {}
+const handleDisable = (row: UserData) => {
+  ElMessageBox.prompt('请输入禁用原因', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    inputPattern: /^.{1,100}$/,
+    inputErrorMessage: '禁用原因长度不能超过100个字符'
+  })
+    .then(({ value }) => {
+      bannedUserApi({ user: { uid: row.uid, cause: value, enable: 'n' } })
+        .then(() => {
+          ElNotification({
+            title: '提示',
+            message: '禁用成功',
+            type: 'success'
+          })
+          table.value?.handleSearch()
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    })
+    .catch(() => {
+      ElNotification({
+        title: '提示',
+        message: '取消禁用',
+        type: 'error'
+      })
+    })
+}
 
-const handleEnable = (row: UserData) => {}
+const handleEnable = (row: UserData) => {
+  ElMessageBox.prompt('请输入启用原因', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    inputPattern: /^.{1,100}$/,
+    inputErrorMessage: '启用原因长度不能超过100个字符'
+  })
+    .then(({ value }) => {
+      bannedUserApi({ user: { uid: row.uid, cause: value, enable: 'y' } })
+        .then(() => {
+          ElNotification({
+            title: '提示',
+            message: '启用成功',
+            type: 'success'
+          })
+          table.value?.handleSearch()
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    })
+    .catch(() => {
+      ElNotification({
+        title: '提示',
+        message: '取消启用',
+        type: 'error'
+      })
+    })
+}
 
 const showMsgDialog = (row: UserData) => {
   console.log(row)
@@ -79,21 +135,25 @@ const handleDialogClose = () => {
 
 const handleSendMsg = () => {
   if (formData.acceptid === -999) {
-    message.error('你给谁发呢？小老弟')
+    ElMessage.error('你给谁发呢？小老弟')
     return
   }
   if (formData.title === '') {
-    message.error('请输入标题')
+    ElMessage.error('请输入标题')
     return
   }
   if (formData.info === '<p><br></p>') {
-    message.error('请输入内容')
+    ElMessage.error('请输入内容')
     return
   }
   loading.value = true
   sendMessageApi({ userMessage: { ...formData } })
     .then(() => {
-      message.success('发送成功')
+      ElNotification({
+        title: '提示',
+        message: '发送成功',
+        type: 'success'
+      })
       handleDialogClose()
     })
     .catch((e) => {
@@ -110,7 +170,7 @@ const handleReset = async () => {
   table.value?.handleSearch()
 }
 
-const searchItems = [
+const searchItems: SearchItem[] = [
   { field: 'queryStr', type: 'input', placeholder: '用户名/昵称/邮箱/qq/微信' },
   { type: 'button', text: '搜索', click: handleSearch, buttonType: 'primary' },
   { type: 'button', text: '重置', click: handleReset, buttonType: 'info' }
@@ -119,8 +179,6 @@ const searchItems = [
 
 <template>
   <div p-20px>
-    <Search :searchItems="searchItems" :searchData="searchData" />
-
     <Table
       mt-20px
       ref="table"
@@ -142,7 +200,11 @@ const searchItems = [
       ]"
       @handleEnable="handleEnable"
       :operateWidth="200"
-    />
+    >
+      <template #searchForm>
+        <Search :searchItems="searchItems" :searchData="searchData" />
+      </template>
+    </Table>
 
     <el-dialog style="height: 100%" @closed="handleDialogClose" title="发送消息" v-model="dialogVisible" append-to-body top="8vh">
       <div v-loading="loading">

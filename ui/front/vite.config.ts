@@ -10,7 +10,7 @@ import DefineOptions from 'unplugin-vue-define-options/vite'
 import { visualizer } from 'rollup-plugin-visualizer'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver, VueUseComponentsResolver, AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
+import { ElementPlusResolver, VueUseComponentsResolver } from 'unplugin-vue-components/resolvers'
 import { createStyleImportPlugin, ElementPlusResolve } from 'vite-plugin-style-import'
 import importToCDN from 'vite-plugin-cdn-import'
 import UnoCSS from 'unocss/vite'
@@ -36,7 +36,7 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
       strictPort: false,
       proxy: {
         '/api': {
-          target: 'http://karl.39nat.com/karl_blog/',
+          target: 'https://kangxianghui.top/karl_blog/',
           ws: true,
           /** 是否允许跨域 */
           changeOrigin: true,
@@ -114,9 +114,6 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
         resolvers: [
           //element-plus组件按需导入
           ElementPlusResolver(),
-          AntDesignVueResolver({
-            importStyle: false
-          }),
           VueUseComponentsResolver()
         ],
         extensions: ['vue'],
@@ -138,6 +135,48 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
           }
         ]
       })
+      // importToCDN({
+      //   prodUrl: 'https://cdn.bootcdn.net/ajax/libs/{name}/{version}/{path}',
+      //   modules: [
+      //     {
+      //       name: 'vue',
+      //       var: 'Vue',
+      //       path: 'vue.global.prod.min.js'
+      //     },
+      //     {
+      //       name: 'vue-router',
+      //       var: 'VueRouter',
+      //       path: 'vue-router.global.min.js'
+      //     },
+      //     // 项目中没有直接安装vue-demi，但是pinia用到了，所以需要在引入pinia前引入vue-demi（https://github.com/vuejs/pinia/blob/v2/packages/pinia/package.json#L77）
+      //     // {
+      //     //   name: 'vue-demi',
+      //     //   var: 'VueDemi',
+      //     //   path: 'index.iife.min.js'
+      //     // },
+      //     {
+      //       name: 'pinia',
+      //       var: 'Pinia',
+      //       path: 'pinia.iife.min.js'
+      //     },
+      //     {
+      //       name: 'element-plus',
+      //       var: 'ElementPlus',
+      //       path: 'index.full.min.js',
+      //       css: 'index.min.css'
+      //     },
+      //     {
+      //       name: 'axios',
+      //       var: 'axios',
+      //       path: 'axios.min.js'
+      //     },
+      //     {
+      //       name: 'dayjs',
+      //       var: 'dayjs',
+      //       path: 'dayjs.min.js'
+      //     }
+      //   ]
+      // })
     ]
   }
 }

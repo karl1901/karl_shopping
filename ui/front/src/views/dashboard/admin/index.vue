@@ -17,13 +17,18 @@ const open = () => {
       video.play()
     })
     .catch((err) => {
-      console.log(err)
+      ElMessage.error('获取摄像头失败，请检查设备是否有摄像头!')
+      console.log(err, '获取摄像头失败，请检查设备是否有摄像头!')
     })
 }
 
 const close = () => {
   const video = document.querySelector('video') as HTMLVideoElement
   const stream = video.srcObject as MediaStream
+  if (!stream) {
+    ElMessage.error('请先打开摄像头!')
+    return
+  }
   const tracks = stream.getTracks()
   tracks.forEach((track) => {
     track.stop()
@@ -35,7 +40,20 @@ const close = () => {
 const jietu = () => {
   const video = document.querySelector('video') as HTMLVideoElement
   content1.value = getBase64Image(video)
+  if (content1.value === 'data:,') {
+    content1.value = ''
+    ElMessage.error('暂无内容，请先打开摄像头!')
+    return
+  }
   console.log(content1.value)
+}
+
+const clear = () => {
+  if (content1.value === '') {
+    ElMessage.error('暂无内容可以清空!')
+    return
+  }
+  content1.value = ''
 }
 
 // 将图片转换为base64
@@ -48,7 +66,7 @@ const jietu = () => {
     <el-button @click="open">打开摄像头</el-button>
     <el-button @click="close">关闭摄像头</el-button>
     <el-button @click="jietu">截图</el-button>
-    <el-button @click="content1 = ''">清空截图</el-button>
+    <el-button @click="clear">清空截图</el-button>
     <img :src="content1" alt="" />
     <div class="video">
       <video />

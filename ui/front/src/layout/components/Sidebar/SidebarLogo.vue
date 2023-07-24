@@ -11,10 +11,10 @@ const props = defineProps({
   <div class="sidebar-logo-container" :class="{ collapse: props.collapse }">
     <transition name="sidebar-logo-fade">
       <router-link v-if="props.collapse" key="collapse" to="/">
-        <img :src="'https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=350'" class="sidebar-logo" />
+        <img :src="'https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=500'" class="sidebar-logo" />
       </router-link>
       <router-link v-else key="expand" to="/">
-        <img :src="'https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=350'" class="sidebar-logo-text" />
+        <img :src="'https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=500'" class="sidebar-logo-text" />
       </router-link>
     </transition>
   </div>

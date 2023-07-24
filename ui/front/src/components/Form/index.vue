@@ -21,8 +21,8 @@ const formRef = ref<FormInstance>()
 const props = withDefaults(defineProps<Props>(), {
   labelWidth: 'auto',
   colOptions: () => ({
-    xs: 24,
-    sm: 12,
+    xs: 6,
+    sm: 6,
     md: 6
   }),
   inline: false

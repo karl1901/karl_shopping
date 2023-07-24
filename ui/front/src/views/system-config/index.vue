@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { resetSystemConfigApi, SystemConfigResponseData } from '@/api/system-config'
-import { message, Modal, notification } from 'ant-design-vue'
 import SystemConfigDialog from './dialog.vue'
+import { type SearchItem } from 'types/common'
 defineOptions({
   name: 'SystemConfig'
 })
@@ -38,34 +38,35 @@ const handleReset = async () => {
 
 /** 恢复默认设置 */
 const handleResetDefault = () => {
-  Modal.confirm({
-    title: '提示',
-    content: '确定要恢复默认设置吗？',
-    okText: '确定',
-    cancelText: '取消',
-    onOk: async () => {
-      try {
-        await resetSystemConfigApi()
-        message.success('恢复默认设置成功')
-        table.value?.handleSearch()
-      } catch (e) {
-        console.log(e)
-        message.error('恢复默认设置失败')
-      }
-    },
-    onCancel: () => {
-      message.info('已取消恢复默认设置')
-    }
+  ElMessageBox.confirm('此操作将恢复默认设置, 是否继续?', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
   })
+    .then(() => {
+      table.value.loading = true
+      resetSystemConfigApi()
+        .then(() => {
+          table.value?.handleSearch()
+        })
+        .finally(() => {
+          table.value.loading = false
+        })
+    })
+    .catch((e) => {
+      console.log(e)
+      if (e === 'cancel') ElMessage.info('已取消重置')
+    })
 }
 
 /** 新建 */
 const handleCreate = () => {
-  //  暂不支持新增
-  notification.open({
-    message: '提示',
-    description: '暂不支持新增',
-    duration: 3
+  // dialogVisible.value = true
+  // console.log('create')
+  ElNotification({
+    title: '提示',
+    message: '暂不支持新增系统配置',
+    type: 'warning'
   })
   return
 }
@@ -90,7 +91,7 @@ const refreshTable = () => {
   table.value?.getDataModelList()
 }
 
-const searchItems = [
+const searchItems: SearchItem[] = [
   { field: 'info', type: 'input', placeholder: '配置描述' },
   { type: 'button', text: '搜索', click: handleSearch, buttonType: 'primary' },
   { type: 'button', text: '重置', click: handleReset, buttonType: 'info' },
@@ -101,8 +102,6 @@ const searchItems = [
 
 <template>
   <div p-20px>
-    <Search :searchItems="searchItems" :searchData="searchData" />
-
     <Table
       mt-20px
       ref="table"
@@ -112,7 +111,11 @@ const searchItems = [
       :hasDelete="false"
       :operateWidth="200"
       @handleEdit="handleEdit"
-    />
+    >
+      <template #searchForm>
+        <Search :searchItems="searchItems" :searchData="searchData" />
+      </template>
+    </Table>
 
     <SystemConfigDialog @update:table="refreshTable" v-model:updateId="currentUpdateId" v-model:visible="dialogVisible" v-model="formData" />
   </div>

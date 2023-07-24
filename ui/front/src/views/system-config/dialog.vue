@@ -84,13 +84,7 @@ const formItems = [
 ]
 </script>
 <template>
-  <el-dialog
-    v-model="dialogVisible"
-    :title="currentUpdateId === undefined ? '新增系统配置' : '修改系统配置'"
-    width="80%"
-    @close="resetForm"
-    :close-on-click-modal="false"
-  >
+  <el-dialog v-model="dialogVisible" :title="currentUpdateId === undefined ? '新增系统配置' : '修改系统配置'" width="80%" @close="resetForm">
     <Form ref="baseForm" v-loading="loading" :formItems="formItems" :formData="formData" />
 
     <template #footer>

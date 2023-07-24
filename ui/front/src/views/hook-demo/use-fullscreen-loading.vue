@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { useFullscreenLoading } from '@/hooks/useFullscreenLoading'
 import { getSuccessApi, getErrorApi } from '@/api/hook-demo/use-fullscreen-loading'
-import { message } from 'ant-design-vue'
+import { ElMessage } from 'element-plus'
+
 const svg = `
   <path class="path" d="
     M 30 15
@@ -22,14 +23,14 @@ const options = {
 
 const querySuccess = async () => {
   const res = await useFullscreenLoading(getSuccessApi)()
-  message.success(res.message)
+  ElMessage.success(res.message)
 }
 
 const queryError = async () => {
   try {
     await useFullscreenLoading(getErrorApi, options)()
   } catch (err: any) {
-    message.error(err.message)
+    ElMessage.error(err.message)
   }
 }
 </script>

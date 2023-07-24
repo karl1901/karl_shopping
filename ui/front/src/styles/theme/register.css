@@ -16,7 +16,8 @@
   background-color: #262626 !important;
   color: #9898a2 !important;
 }
-.dark .app-wrapper .sidebar-container .el-menu .el-menu-item.is-active, .dark .app-wrapper .sidebar-container .el-menu .el-menu-item:hover {
+.dark .app-wrapper .sidebar-container .el-menu .el-menu-item.is-active,
+.dark .app-wrapper .sidebar-container .el-menu .el-menu-item:hover {
   background-color: #303030 !important;
   color: #ec48c9 !important;
 }
@@ -74,7 +75,8 @@
 .dark .el-popper .el-menu .el-menu-item {
   background-color: #262626 !important;
 }
-.dark .el-popper .el-menu .el-menu-item.is-active, .dark .el-popper .el-menu .el-menu-item:hover {
+.dark .el-popper .el-menu .el-menu-item.is-active,
+.dark .el-popper .el-menu .el-menu-item:hover {
   background-color: #303030 !important;
   color: #fff !important;
 }
@@ -86,4 +88,4 @@
 }
 .dark .app-main .permission-alert {
   background-color: #303030;
-}/*# sourceMappingURL=register.css.map */
+} /*# sourceMappingURL=register.css.map */

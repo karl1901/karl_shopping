@@ -41,7 +41,7 @@
     "vite.config.ts",
     "types/*.d.ts",
     "./.eslintrc-auto-import.json"
-  ],
+, "types/search-item.ts"  ],
   /** 编译器默认排除的编译文件 */
   "exclude": ["node_modules", "dist"]
 }

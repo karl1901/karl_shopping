@@ -2,6 +2,9 @@ import { type RouteRecordRaw, createRouter, createWebHashHistory, createWebHisto
 
 const Layout = () => import('@/layout/index.vue')
 
+import user from './user'
+import system from './system'
+
 /** 常驻路由 */
 export const constantRoutes: RouteRecordRaw[] = [
   {
@@ -64,67 +67,11 @@ export const constantRoutes: RouteRecordRaw[] = [
  * 必须带有 Name 属性
  */
 export const asyncRoutes: RouteRecordRaw[] = [
-  {
-    path: '/system-config',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'System-Config',
-    meta: {
-      title: '系统配置管理',
-      iIcon: '&#xe669;',
-      roles: ['admin'],
-      alwaysShow: true
-    },
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/system-config/index.vue'),
-        name: 'SystemConfig',
-        meta: {
-          title: '系统配置列表',
-          iIcon: '&#xe630;',
-          roles: ['admin'],
-          keepAlive: false
-        }
-      }
-    ]
-  },
-  {
-    path: '/user-manage',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'User-Manage',
-    meta: {
-      title: '用户信息管理',
-      iIcon: '&#xe663;',
-      roles: ['admin'],
-      alwaysShow: true
-    },
-    children: [
-      {
-        path: 'user-log',
-        component: () => import('@/views/user-manage/user-log.vue'),
-        name: 'UserLog',
-        meta: {
-          title: '用户日志',
-          roles: ['admin'],
-          iIcon: '&#xe6ac;',
-          keepAlive: false
-        }
-      },
-      {
-        path: 'user-list',
-        component: () => import('@/views/user-manage/user-list.vue'),
-        name: 'UserList',
-        meta: {
-          title: '用户列表',
-          iIcon: '&#xe659;',
-          roles: ['admin'],
-          keepAlive: false
-        }
-      }
-    ]
-  },
+  // 业务路由
+  system,
+  user,
+
+  // 404 页面必须放在最后 !!!
   {
     path: '/:pathMatch(.*)*',
     redirect: '/404',

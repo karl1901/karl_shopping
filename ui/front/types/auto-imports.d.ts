@@ -7,6 +7,8 @@ declare global {
   const DeviceType: typeof import('../src/store/modules/app')['DeviceType']
   const EffectScope: typeof import('vue')['EffectScope']
   const ElMessage: typeof import('element-plus/es')['ElMessage']
+  const ElMessageBox: typeof import('element-plus/es')['ElMessageBox']
+  const ElNotification: typeof import('element-plus/es')['ElNotification']
   const HttpStatus: typeof import('../src/enum/httpStatus')['HttpStatus']
   const UpdateType: typeof import('../src/enum/user')['UpdateType']
   const UserEnable: typeof import('../src/enum/user')['UserEnable']
@@ -99,6 +101,8 @@ declare module 'vue' {
     readonly DeviceType: UnwrapRef<typeof import('../src/store/modules/app')['DeviceType']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly ElMessage: UnwrapRef<typeof import('element-plus/es')['ElMessage']>
+    readonly ElMessageBox: UnwrapRef<typeof import('element-plus/es')['ElMessageBox']>
+    readonly ElNotification: UnwrapRef<typeof import('element-plus/es')['ElNotification']>
     readonly HttpStatus: UnwrapRef<typeof import('../src/enum/httpStatus')['HttpStatus']>
     readonly UpdateType: UnwrapRef<typeof import('../src/enum/user')['UpdateType']>
     readonly UserEnable: UnwrapRef<typeof import('../src/enum/user')['UserEnable']>

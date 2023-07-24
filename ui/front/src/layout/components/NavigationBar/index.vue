@@ -9,10 +9,11 @@ import Hamburger from '../Hamburger/index.vue'
 import ThemeSwitch from '@/components/ThemeSwitch/index.vue'
 import Screenfull from '@/components/Screenfull/index.vue'
 import Notify from '@/components/Notify/index.vue'
+import { ElMessage } from 'element-plus'
 import { useFullscreenLoading } from '@/hooks/useFullscreenLoading'
 import { UpdateType } from '@/enum/user'
 import { logOffUserApi } from '@/api/user'
-import { message } from 'ant-design-vue'
+
 const router = useRouter()
 const appStore = useAppStore()
 const settingsStore = useSettingsStore()
@@ -86,7 +87,7 @@ const logoff = () => {
     })
     .catch((e) => {
       console.log(e)
-      if (e === 'cancel') message.info('已取消注销')
+      if (e === 'cancel') ElMessage.info('已取消注销')
     })
 }
 </script>
@@ -103,7 +104,7 @@ const logoff = () => {
         <div class="right-menu-avatar">
           <el-avatar
             :src="
-              userStore.userInfo?.avatar_url ? userStore.userInfo?.avatar_url : 'https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=350'
+              userStore.userInfo?.avatar_url ? userStore.userInfo?.avatar_url : 'https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=500'
             "
             :size="30"
           />

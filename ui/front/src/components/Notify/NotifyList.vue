@@ -23,7 +23,7 @@ const props = defineProps({
           <div class="card-time">{{ item.datetime }}</div>
         </div>
         <div v-if="item.avatar" class="card-avatar">
-          <img :src="'https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=350'" width="34" />
+          <img :src="'https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=500'" width="34" />
         </div>
       </div>
     </template>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
-import { message } from 'ant-design-vue'
+import { ElMessage } from 'element-plus'
 import { Bell } from '@element-plus/icons-vue'
 import NotifyList from './NotifyList.vue'
 import { type IListItem, notifyData, messageData, todoData } from './data'
@@ -48,26 +48,26 @@ const data = ref<IDataItem[]>([
 const loading = ref(false)
 
 const handleHistory = () => {
-  message.success(`跳转到${activeName.value}历史页面`)
+  ElMessage.success(`跳转到${activeName.value}历史页面`)
 }
 
 const handleClear = () => {
   if (data.value.find((item) => item.name === activeName.value)?.list.length === 0) {
-    message.error('当前没有数据')
+    ElMessage.error('当前没有数据')
     return
   }
   loading.value = true
   const randomNum = Math.random()
   setTimeout(() => {
     if (randomNum > 0.5) {
-      message.success('清除成功')
+      ElMessage.success('清除成功')
       data.value.forEach((item) => {
         if (item.name === activeName.value) {
           item.list = []
         }
       })
     } else {
-      message.error('清除失败')
+      ElMessage.error('清除失败')
     }
     loading.value = false
   }, 1000)

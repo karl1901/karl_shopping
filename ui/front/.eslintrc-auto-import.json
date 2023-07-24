@@ -6,6 +6,8 @@
     "DeviceType": true,
     "EffectScope": true,
     "ElMessage": true,
+    "ElMessageBox": true,
+    "ElNotification": true,
     "HttpStatus": true,
     "InjectionKey": true,
     "PropType": true,

@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { ref, onUnmounted } from 'vue'
+import { ElMessage } from 'element-plus'
 import screenfull from 'screenfull'
-import { message } from 'ant-design-vue'
+
 const props = defineProps({
   /** 全屏的元素，默认是 html */
   element: {
@@ -26,7 +27,7 @@ const isFullscreen = ref<boolean>(false)
 const click = () => {
   const dom = document.querySelector(props.element) || undefined
   if (!screenfull.isEnabled) {
-    message.warning('您的浏览器无法工作')
+    ElMessage.warning('您的浏览器无法工作')
     return
   }
   screenfull.toggle(dom)

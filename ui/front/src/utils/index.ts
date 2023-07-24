@@ -191,3 +191,14 @@ export function getBase64Image(video: any) {
   const dataURL = canvas.toDataURL('image/' + ext)
   return dataURL
 }
+
+/**
+ * 获取一串文字的宽度
+ */
+
+export function getTextWidth(text: string, fontSize = 12) {
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
+  ctx.font = `${fontSize}px Arial`
+  return ctx?.measureText(text).width
+}

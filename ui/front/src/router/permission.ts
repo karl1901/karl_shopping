@@ -1,7 +1,7 @@
 import router from '@/router'
 import { useUserStoreHook } from '@/store/modules/user'
 import { usePermissionStoreHook } from '@/store/modules/permission'
-import { message } from 'ant-design-vue'
+import { ElMessage } from 'element-plus'
 import { whiteList } from '@/config/white-list'
 import asyncRouteSettings from '@/config/async-route'
 import NProgress from 'nprogress'
@@ -39,7 +39,7 @@ router.beforeEach(async (to, _from, next) => {
           console.log(err)
           userStore.resetState()
           // console.log(err)
-          message.error(err || '路由守卫过程发生错误')
+          ElMessage.error(err || '路由守卫过程发生错误')
           next('/login')
           NProgress.done()
         }

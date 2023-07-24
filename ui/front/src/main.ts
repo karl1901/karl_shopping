@@ -14,9 +14,13 @@ import 'element-plus/theme-chalk/dark/css-vars.css'
 import 'highlight.js/styles/atom-one-dark.css'
 import 'highlight.js/lib/common'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
-import 'ant-design-vue/dist/reset.css'
 
 const app = createApp(App)
+
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
 
 loadSvg(app)
 loadDirectives(app)

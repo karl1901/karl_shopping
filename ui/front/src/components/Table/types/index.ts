@@ -5,7 +5,7 @@ export interface TableColumn {
   type?: string
   model?: string
   disabled?: boolean
-  width?: string | number
+  width?: number
   fixed?: 'left' | 'right'
   align?: 'left' | 'center' | 'right'
   sortable?: boolean
