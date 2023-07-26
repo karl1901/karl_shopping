@@ -3,7 +3,8 @@
 > ✏️ 设计者：karl  
 > 📌 贡献者：  
 > 1、**karl**  
-> 2、**Ra1nbow**
+> 2、**Ra1nbow**  
+> 3、**死神的微笑**
 
 ## 🥝 系统架构图
 
@@ -30,7 +31,7 @@
 | 作用 | 技术栈 |
 | :----: | :----: |
 | 框架 | Vue3 |
-| UI | Ant Design Vue |
+| UI | Element Plus |
 | 数据图表 | Echarts |
 | 地图 | 高德地图 JsAPI |
 | 地图数据可视化 | 高德地图 LOCA 可视化 API |
