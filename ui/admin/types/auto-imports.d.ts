@@ -6,9 +6,6 @@ export {}
 declare global {
   const DeviceType: typeof import('../src/store/modules/app')['DeviceType']
   const EffectScope: typeof import('vue')['EffectScope']
-  const ElMessage: typeof import('element-plus/es')['ElMessage']
-  const ElMessageBox: typeof import('element-plus/es')['ElMessageBox']
-  const ElNotification: typeof import('element-plus/es')['ElNotification']
   const HttpStatus: typeof import('../src/enum/httpStatus')['HttpStatus']
   const UpdateType: typeof import('../src/enum/user')['UpdateType']
   const UserEnable: typeof import('../src/enum/user')['UserEnable']
@@ -57,6 +54,7 @@ declare global {
   const toRaw: typeof import('vue')['toRaw']
   const toRef: typeof import('vue')['toRef']
   const toRefs: typeof import('vue')['toRefs']
+  const toValue: typeof import('vue')['toValue']
   const triggerRef: typeof import('vue')['triggerRef']
   const unref: typeof import('vue')['unref']
   const useAppStore: typeof import('../src/store/modules/app')['useAppStore']
@@ -100,9 +98,6 @@ declare module 'vue' {
   interface ComponentCustomProperties {
     readonly DeviceType: UnwrapRef<typeof import('../src/store/modules/app')['DeviceType']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
-    readonly ElMessage: UnwrapRef<typeof import('element-plus/es')['ElMessage']>
-    readonly ElMessageBox: UnwrapRef<typeof import('element-plus/es')['ElMessageBox']>
-    readonly ElNotification: UnwrapRef<typeof import('element-plus/es')['ElNotification']>
     readonly HttpStatus: UnwrapRef<typeof import('../src/enum/httpStatus')['HttpStatus']>
     readonly UpdateType: UnwrapRef<typeof import('../src/enum/user')['UpdateType']>
     readonly UserEnable: UnwrapRef<typeof import('../src/enum/user')['UserEnable']>
@@ -151,6 +146,93 @@ declare module 'vue' {
     readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
+    readonly toValue: UnwrapRef<typeof import('vue')['toValue']>
+    readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
+    readonly unref: UnwrapRef<typeof import('vue')['unref']>
+    readonly useAppStore: UnwrapRef<typeof import('../src/store/modules/app')['useAppStore']>
+    readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
+    readonly useAuth: UnwrapRef<typeof import('../src/hooks/useAuth')['default']>
+    readonly useChunkUpload: UnwrapRef<typeof import('../src/hooks/useChunkUpload')['useChunkUpload']>
+    readonly useCode: UnwrapRef<typeof import('../src/hooks/useCode')['default']>
+    readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
+    readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
+    readonly useFetchSelect: UnwrapRef<typeof import('../src/hooks/useFetchSelect')['useFetchSelect']>
+    readonly useFullscreenLoading: UnwrapRef<typeof import('../src/hooks/useFullscreenLoading')['useFullscreenLoading']>
+    readonly useIntervalRequest: UnwrapRef<typeof import('../src/hooks/useIntervalRequest')['default']>
+    readonly useLink: UnwrapRef<typeof import('vue-router')['useLink']>
+    readonly usePagination: UnwrapRef<typeof import('../src/hooks/usePagination')['usePagination']>
+    readonly usePermissionStore: UnwrapRef<typeof import('../src/store/modules/permission')['usePermissionStore']>
+    readonly usePermissionStoreHook: UnwrapRef<typeof import('../src/store/modules/permission')['usePermissionStoreHook']>
+    readonly useRoute: UnwrapRef<typeof import('vue-router')['useRoute']>
+    readonly useRouter: UnwrapRef<typeof import('vue-router')['useRouter']>
+    readonly useSettingsStore: UnwrapRef<typeof import('../src/store/modules/settings')['useSettingsStore']>
+    readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
+    readonly useStorage: UnwrapRef<typeof import('../src/hooks/useStorage')['default']>
+    readonly useTags: UnwrapRef<typeof import('../src/hooks/useTags')['useTags']>
+    readonly useTagsViewStore: UnwrapRef<typeof import('../src/store/modules/tags-view')['useTagsViewStore']>
+    readonly useTheme: UnwrapRef<typeof import('../src/hooks/useTheme')['useTheme']>
+    readonly useUserStore: UnwrapRef<typeof import('../src/store/modules/user')['useUserStore']>
+    readonly useUserStoreHook: UnwrapRef<typeof import('../src/store/modules/user')['useUserStoreHook']>
+    readonly useVmodel: UnwrapRef<typeof import('../src/hooks/useVmodel')['useVmodel']>
+    readonly watch: UnwrapRef<typeof import('vue')['watch']>
+    readonly watchEffect: UnwrapRef<typeof import('vue')['watchEffect']>
+    readonly watchPostEffect: UnwrapRef<typeof import('vue')['watchPostEffect']>
+    readonly watchSyncEffect: UnwrapRef<typeof import('vue')['watchSyncEffect']>
+  }
+}
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    readonly DeviceType: UnwrapRef<typeof import('../src/store/modules/app')['DeviceType']>
+    readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly HttpStatus: UnwrapRef<typeof import('../src/enum/httpStatus')['HttpStatus']>
+    readonly UpdateType: UnwrapRef<typeof import('../src/enum/user')['UpdateType']>
+    readonly UserEnable: UnwrapRef<typeof import('../src/enum/user')['UserEnable']>
+    readonly UserRole: UnwrapRef<typeof import('../src/enum/user')['UserRole']>
+    readonly UserSex: UnwrapRef<typeof import('../src/enum/user')['UserSex']>
+    readonly computed: UnwrapRef<typeof import('vue')['computed']>
+    readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
+    readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
+    readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
+    readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
+    readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
+    readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
+    readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
+    readonly h: UnwrapRef<typeof import('vue')['h']>
+    readonly index: UnwrapRef<typeof import('../src/store/index')['default']>
+    readonly inject: UnwrapRef<typeof import('vue')['inject']>
+    readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
+    readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
+    readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
+    readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
+    readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
+    readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
+    readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>
+    readonly onBeforeRouteLeave: UnwrapRef<typeof import('vue-router')['onBeforeRouteLeave']>
+    readonly onBeforeRouteUpdate: UnwrapRef<typeof import('vue-router')['onBeforeRouteUpdate']>
+    readonly onBeforeUnmount: UnwrapRef<typeof import('vue')['onBeforeUnmount']>
+    readonly onBeforeUpdate: UnwrapRef<typeof import('vue')['onBeforeUpdate']>
+    readonly onDeactivated: UnwrapRef<typeof import('vue')['onDeactivated']>
+    readonly onErrorCaptured: UnwrapRef<typeof import('vue')['onErrorCaptured']>
+    readonly onMounted: UnwrapRef<typeof import('vue')['onMounted']>
+    readonly onRenderTracked: UnwrapRef<typeof import('vue')['onRenderTracked']>
+    readonly onRenderTriggered: UnwrapRef<typeof import('vue')['onRenderTriggered']>
+    readonly onScopeDispose: UnwrapRef<typeof import('vue')['onScopeDispose']>
+    readonly onServerPrefetch: UnwrapRef<typeof import('vue')['onServerPrefetch']>
+    readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
+    readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
+    readonly provide: UnwrapRef<typeof import('vue')['provide']>
+    readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
+    readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
+    readonly ref: UnwrapRef<typeof import('vue')['ref']>
+    readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
+    readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
+    readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
+    readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
+    readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>
+    readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
+    readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
+    readonly toValue: UnwrapRef<typeof import('vue')['toValue']>
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly useAppStore: UnwrapRef<typeof import('../src/store/modules/app')['useAppStore']>
